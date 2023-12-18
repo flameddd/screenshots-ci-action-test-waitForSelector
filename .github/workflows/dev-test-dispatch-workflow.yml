@@ -1,0 +1,42 @@
+name: Dispatch screenshots-action workflow
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'The website URL (ex: https://www.google.com/)'
+        required: true
+        default: 'https://flameddd.github.io/screenshots-ci-action-test-waitForSelector/'
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: install puppeteer-headful
+      uses: mujo-code/puppeteer-headful@master
+      env:
+        CI: 'true'
+    - name: screenshots-ci-action-waitForSelector
+      uses: flameddd/screenshots-ci-action@master
+      with:
+        url: ${{ github.event.inputs.url }}
+        noDesktop: true
+        devices: iPhone 6
+        waitForSelector: '#waitForElement'
+    - uses: actions/upload-artifact@v2
+      with:
+        path: screenshots
+        name: Download-screenshots
+
+    - name: screenshots-ci-action-waitForSelector-wrongSelector
+      uses: flameddd/screenshots-ci-action@master
+      with:
+        url: ${{ github.event.inputs.url }}
+        noDesktop: true
+        devices: iPhone 6
+        waitForSelector: '.waitForElement' # Give wrong element selector for test
+        waitForSelectorTimeout: 5000
+    - uses: actions/upload-artifact@v2
+      with:
+        path: screenshots
+        name: Download-screenshots-element-non-exist
