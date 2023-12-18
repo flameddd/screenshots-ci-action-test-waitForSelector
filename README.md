@@ -1,0 +1,1 @@
+# screenshots-ci-action-test-waitForSelector
