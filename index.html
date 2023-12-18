@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshots-ci-action-test-waitForSelector</title>
+    <style>
+      html,body {
+        height: 100%;
+        margin: 0;
+      }  
+    </style>
+    <script>
+      window.addEventListener("load", function(){
+        let timeleft = 8;
+        let downloadTimer = setInterval(function(){
+          if(timeleft <= 0){
+            clearInterval(downloadTimer);
+          }
+          document.getElementById("progressBar").value = 10 - timeleft;
+          timeleft -= 1;
+        }, 1000);
+
+        setTimeout(() => {
+          const newDiv = document.createElement("div");
+          newDiv.style.backgroundColor = 'grey';
+          newDiv.style.height = '35%';
+          newDiv.innerText = 'This is new Div(#waitForElement) element, displayed after 8 seconds'
+          newDiv.id = 'waitForElement'
+          document.body.appendChild(newDiv)
+        }, 8000)
+        
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Screenshots-ci-action-test-waitForSelector</h1>
+    <div>Following element will display <b>after</b> 8 seconds</div>
+    <div><progress value="0" max="8" id="progressBar"></progress></div>
+  </body>
+</html>
